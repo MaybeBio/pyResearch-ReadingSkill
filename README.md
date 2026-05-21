@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-blueviolet)](https://docs.anthropic.com/en/docs/claude-code)
-[![Contributors](https://img.shields.io/github/contributors/nicaizht/pyResearch-ReadingSkill)
+[![Contributors](https://img.shields.io/github/contributors/MaybeBio/pyResearch-ReadingSkill)
 
 一个专注于从引言（Introduction）角度进行文献调研和写作指导的 Claude Code Skill 集合，支持批量文献引言分析、多主题自动识别、复杂关系可视化等功能，内置严格的反幻觉机制和完整的文献可追溯性。
 
@@ -33,7 +33,7 @@
 
 ```bash
 # 克隆整个仓库
-git clone https://github.com/nicaizht/pyResearch-ReadingSkill ~/pyResearch-ReadingSkill
+git clone https://github.com/MaybeBio/pyResearch-ReadingSkill ~/pyResearch-ReadingSkill
 
 # 复制需要的skill到Claude skills目录
 cp -r ~/pyResearch-ReadingSkill/skills/intro-analysis ~/.claude/skills/
@@ -50,7 +50,7 @@ cp -r pyResearch-ReadingSkill/skills/intro-analysis ~/.claude/skills/
 ### 方式三：符号链接（开发时推荐）
 
 ```bash
-git clone https://github.com/nicaizht/pyResearch-ReadingSkill ~/pyResearch-ReadingSkill
+git clone https://github.com/MaybeBio/pyResearch-ReadingSkill ~/pyResearch-ReadingSkill
 ln -s ~/pyResearch-ReadingSkill/skills/intro-analysis ~/.claude/skills/intro-analysis
 ```
 
