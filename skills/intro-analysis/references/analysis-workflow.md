@@ -26,7 +26,7 @@
 - **研究领域/问题**：宽泛背景 + 具体问题
 - **研究切入点**：作者选择的切入点
 
-**格式**：`(id: paper_id, 具体位置: Introduction第X段)`
+**格式**：`(DOI: 10.xxx/yyy)` 或 `(PMID: 12345678)`
 **标签**：`[原文声明]` 或 `[模型归纳]`
 
 ### 2. 历史脉络
@@ -38,7 +38,7 @@
 
 **格式要求**：
 - 保留原引言中的引用标记
-- 格式为 `(id: paper_id, Introduction第X段)`
+- 格式为 `(PMID: 12345678)` 或 `(DOI: 10.xxx/yyy)`
 - 引用原文陈述
 
 ### 3. 研究现状分类
@@ -47,7 +47,7 @@
 - 现有研究的主要类别（如："目前主要分为三类方法"）
 - 每类方法的核心思路
 
-**来源**：`(id: paper_id, Introduction第X段)`
+**来源**：`(PMID: 12345678)` 或 `(DOI: 10.xxx/yyy)`
 **标签**：
 - 作者直接陈述 → `[原文声明]`
 - 归纳分类 → `[模型归纳]`
@@ -62,7 +62,7 @@
   - 结果矛盾冲突
   - 技术瓶颈/限制
 
-**来源**：`(id: paper_id, Introduction最后一段/第X段)`
+**来源**：`(PMID: 12345678)` 或 `(DOI: 10.xxx/yyy)`
 **证据标注**：引用原文转折句
 
 ### 5. 核心观点
@@ -73,8 +73,7 @@
 - 提出的新思路
 - **观点依赖关系**：A观点依赖B观点，或A观点反驳B观点
 
-**格式**：`(id: paper_id, Introduction第X段)`
-**标签**：`[原文声明]` 或 `[模型归纳]`
+**格式**：`(DOI: 10.xxx/yyy)` 或 `(PMID: 12345678)``[原文声明]` 或 `[模型归纳]`
 **证据标注**：引用原文陈述
 
 ### 6. 关键参考文献
@@ -84,19 +83,10 @@
 - 作者认同/反驳的具体观点
 
 **引用类型**：支持、反对、延伸、引用
-**格式**：`[Citation] (cited_by: paper_id, type: support/reject)`
+**格式**：`[Citation] (cited_by: PMID 12345678, type: support/reject)`
 **注意**：对于二手引用，标注为 `[引用文献未详述]`
 
-### 7. 引言结构分析
-
-**基于顶刊Introduction三步法分析**：
-- **第一步：建立研究背景** - 为什么重要（宽泛 → 具体）
-- **第二步：指出研究缺口** - 现有研究缺什么
-- **第三步：提出研究问题** - 你的贡献在哪里
-- **引言质量评级**：✅优秀 / ⚠️一般 / ❌较差
-- **标签**：`[模型归纳]`
-
-### 8. 原文-分析配对 ⭐
+### 7. 原文-分析配对 ⭐
 
 **这是第一阶段最关键的质量控制步骤。**
 
@@ -155,7 +145,7 @@
 
 **主题定义** [模型归纳]：该主题研究如何利用预训练的蛋白语言模型（ProtT5, ESM-2等）提取序列特征，替代传统MSA和手工特征，用于无序区域和结合位点的预测。该主题是"无序预测"和"深度学习"两个方向的交叉领域。
 
-**推理依据**：paper_3、paper_7、paper_12均在引言中将pLM作为替代MSA的核心技术创新点。
+**推理依据**：PMID 36851914、PMID 38866950、PMID 39433833(或使用doi)均在引言中将pLM作为替代MSA的核心技术创新点。
 ```
 
 #### 2.2 方法论演进时间线
@@ -169,13 +159,13 @@
 
 **示例**：
 ```markdown
-**2018** - [原文声明] 「ANCHOR2 performed best by using biophysics-based energy functions」（paper_3, Introduction第2段）
+**2018** - [原文声明] 「ANCHOR2 performed best by using biophysics-based energy functions」（PMID 36851914）
   [模型归纳] 标志着物理能量函数的成熟，但同时也暴露了纯物理方法的局限——无法利用进化信息。
 
-**2020** - [原文声明] 「Methods outperformed ANCHOR2 through using homology-based inference and MSAs」（paper_3, Introduction第2段）
+**2020** - [原文声明] 「Methods outperformed ANCHOR2 through using homology-based inference and MSAs」（PMID 36851914）
   [模型归纳] 进化信息的引入带来了显著提升，但也引入了对高质量MSA的依赖，这在IDR领域恰恰是弱项。
 
-**2022+** - [原文声明] 「Protein language models present a novel approach without explicitly using MSAs」（paper_3, Introduction第3段）
+**2022+** - [原文声明] 「Protein language models present a novel approach without explicitly using MSAs」（PMID 36851914）
   [模型归纳] pLM的出现解决了"需要MSA但IDR的MSA质量差"的根本矛盾，标志着该主题的技术路线转向。
 ```
 
@@ -186,9 +176,9 @@
 **格式**：
 | 类别 | 代表方法 | 核心思路 | 优势 | 局限 | 代表文献 |
 |-----|---------|---------|------|------|---------|
-| 物理方法 | ANCHOR2 | 基于能量函数 | 无需训练数据 | 无法利用进化信息 | paper_3 |
-| MSA方法 | ... | ... | ... | MSA质量依赖 | paper_3 |
-| pLM方法 | IDBindT5 | 单序列embedding | 避免MSA依赖 | 可解释性差 | paper_3, paper_7 |
+| 物理方法 | ANCHOR2 | 基于能量函数 | 无需训练数据 | 无法利用进化信息 | PMID 36851914 |
+| MSA方法 | ... | ... | ... | MSA质量依赖 | PMID 36851914 |
+| pLM方法 | IDBindT5 | 单序列embedding | 避免MSA依赖 | 可解释性差 | PMID 38866950, PMID 39433833 |
 
 #### 2.4 核心观点与争议
 
@@ -219,11 +209,11 @@
 **示例**：
 ```mermaid
 graph TD
-    A["「IDR序列具有组成偏差」<br/>(paper_1, Intro Para 2)"]:::base
-    B["「可以从序列预测无序」<br/>(paper_1, Intro Para 3)"]:::derived
-    C["「MSA用于结合位点预测」<br/>(paper_3, Intro Para 2)"]:::base
-    D["「IDR的MSA质量差」<br/>(paper_3, Intro Para 3)"]:::counter
-    E["「pLM替代MSA进行IDR预测」<br/>(paper_3, Intro Para 4)"]:::derived
+    A["「IDR序列具有组成偏差」<br/>(PMID 36851914)"]:::base
+    B["「可以从序列预测无序」<br/>(PMID 36851914)"]:::derived
+    C["「MSA用于结合位点预测」<br/>(PMID 36851914)"]:::base
+    D["「IDR的MSA质量差」<br/>(PMID 36851914)"]:::counter
+    E["「pLM替代MSA进行IDR预测」<br/>(PMID 36851914)"]:::derived
     
     A --> B
     A --> C
@@ -243,8 +233,8 @@ graph TD
 **格式**：
 | ID | 标题 | 作者 | 年份 | 核心贡献（该主题内） |
 |----|------|------|------|-------------------|
-| paper_3 | IDBindT5 | ... | 2023 | 首个pLM-based IDR结合位点预测 |
-| paper_7 | ... | ... | 2024 | pLM embedding用于多类型结合位点 |
+| PMID 38866950 | IDBindT5 | ... | 2024 | 首个pLM-based IDR结合位点预测 |
+| PMID 39433833 | ... | ... | 2024 | pLM embedding用于多类型结合位点 |
 
 #### 2.8 该主题的未来方向
 
@@ -277,7 +267,7 @@ graph TD
 **对比表格**（每条观点使用 `[原文声明]` + `[模型归纳]` 配对）：
 | 观点主题 | 观点表述（原文） | 标签 | 支持文献 | 反对/质疑文献 | 依赖观点 | 证据 |
 |---------|-----------------|------|---------|--------------|---------|------|
-| X方法有效 | 「X method achieves state-of-the-art performance on scenario A」 | [原文声明] | paper_a, paper_c | paper_d | - | (paper_a, Intro Para 3) |
+| X方法有效 | 「X method achieves state-of-the-art performance on scenario A」 | [原文声明] | PMID A, PMID C | PMID D | - | (PMID A) |
 
 ### 5. 观点依赖图
 
@@ -368,7 +358,7 @@ graph TD
 - [ ] 历史脉络有时间线索
 - [ ] 研究缺口有转折词证据
 - [ ] 核心观点有原文引用
-- [ ] 引言结构分析有评级
+- [ ] **文献引用使用DOI/PMID（非paper_01临时编号）**
 - [ ] **每条 `[原文声明]` 有配套 `[模型归纳]` 分析**
 - [ ] **无连续3条以上纯原文引用**
 

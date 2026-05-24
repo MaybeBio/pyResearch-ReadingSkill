@@ -36,11 +36,11 @@
 
 **可提取内容**：
 - 研究定位 `[原文声明]` + 证据
-  - 「This paper proposes a novel approach for...」 (paper_2, Abstract)
+  - 「This paper proposes a novel approach for...」 (PMID 22222222, Abstract)
 - 核心观点 `[原文声明]` + 证据
-  - 「Our method achieves state-of-the-art performance」 (paper_2, Abstract)
+  - 「Our method achieves state-of-the-art performance」 (PMID 22222222, Abstract)
 - 主要贡献 `[原文声明]` + 证据
-  - 「We contribute: 1) ... 2) ... 3) ...」 (paper_2, Abstract)
+  - 「We contribute: 1) ... 2) ... 3) ...」 (PMID 22222222, Abstract)
 
 **无法提取**：
 - 历史脉络 `[仅有Abstract，无法提取历史脉络]`
@@ -60,7 +60,7 @@
 
 ### 处理方式
 
-1. **如果论文ID缺失**：使用 `paper_1`, `paper_2` 等临时编号
+1. **如果论文ID缺失**：使用 `PMID 11111111`, `PMID 22222222` 等临时编号
 2. **如果部分信息缺失**：使用 `[未明确给出]` 标记
 3. **自动生成引用**：使用可用信息生成引用格式
 
@@ -68,7 +68,7 @@
 
 ```markdown
 ---
-id: paper_1
+id: PMID 11111111
 title: 论文标题
 authors: 作者列表
 year: 年份
@@ -115,7 +115,7 @@ pmid: [未明确给出]
 ### 处理方式
 
 1. **在观点论战分析中**统一归类
-2. **列出所有支持文献**：paper_a, paper_b, paper_c
+2. **列出所有支持文献**：PMID A, PMID B, PMID C
 3. **区分引用关系**：
    - 直接引用原始工作
    - 二手引用他人观点
@@ -138,8 +138,8 @@ pmid: [未明确给出]
 
 ```mermaid
 graph TD
-    A[「观点A」<br/>(paper_1)] -.循环.-> B[「观点B」<br/>(paper_2)]
-    B -.循环.-> C[「观点C」<br/>(paper_3)]
+    A[「观点A」<br/>(PMID 11111111)] -.循环.-> B[「观点B」<br/>(PMID 22222222)]
+    B -.循环.-> C[「观点C」<br/>(PMID 33333333)]
     C -.循环.-> A
 
     style A stroke:#ff0000,stroke-width:2px,stroke-dasharray: 5 5
@@ -165,9 +165,9 @@ graph TD
 
 ```markdown
 **关键参考文献**：
-- [Smith et al., 2015] (cited_by: paper_1, type: 引用)
+- [Smith et al., 2015] (cited_by: PMID 11111111, type: 引用)
   - 「Smith et al. proposed a novel approach...」 [引用文献未详述]
-  - (paper_1, Introduction第3段)
+  - (PMID 11111111)
 ```
 
 ---
@@ -209,7 +209,7 @@ graph TD
 ```markdown
 **核心观点**：
 - 「The method shows promising results」 [不确定 - 未提供具体指标]
-  - (paper_1, Introduction第5段)
+  - (PMID 11111111)
 ```
 
 ---
@@ -274,7 +274,7 @@ graph TD
 
 ```markdown
 ⚠️ 输入文件格式警告：
-- paper_1：元信息不完整，部分字段缺失
-- paper_2：缺少Introduction，仅有Abstract
+- PMID 11111111：元信息不完整，部分字段缺失
+- PMID 22222222：缺少Introduction，仅有Abstract
 - 继续使用可用内容进行分析...
 ```

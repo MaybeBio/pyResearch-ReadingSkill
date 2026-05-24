@@ -11,22 +11,38 @@
 
 ### 行内引用格式（短句）
 ```markdown
-作者认为「Deep learning has demonstrated remarkable performance in medical image analysis」（paper_1, Introduction第2段）
+作者认为「Deep learning has demonstrated remarkable performance in medical image analysis」（PMID 12345678）
 ```
 
 ### 引用块格式（长段落）
 ```markdown
-> "Deep learning has demonstrated remarkable performance in medical image analysis" (paper_1, Introduction, Para 2-5)
+> "Deep learning has demonstrated remarkable performance in medical image analysis" (DOI 10.xxx/yyy)
 ```
 
 ### 引用三要素
 
 所有证据性论点必须包含：
-1. **来源文献**：使用完整引用格式
+1. **来源文献**：使用DOI或PMID作为唯一标识
 2. **原文内容**：保留原文英文，用 `「...」` 包裹
-3. **位置标注**：具体到段/句
 
 ---
+
+---
+
+## 文献引用标识规则 ⭐
+
+**所有文献引用必须使用DOI或PMID作为唯一标识符，禁止使用paper_01、paper_X等自编临时编号。**
+
+原因：
+- 临时编号（paper_01）在不同分析session中不一致，导致引用乱码
+- 临时编号容易产生幻觉——标识错位、张冠李戴
+- DOI/PMID是全局唯一的学术标识，可被任何人验证
+- DOI优先于PMID（DOI更持久且可直接访问）
+
+**正确写法**：`（PMID 36416266）` 或 `（DOI 10.1093/nar/gkac1055）`
+**禁止写法**：`（paper_1）` ❌
+
+在报告末尾的参考文献索引中使用DOI作为首选标识，无DOI时使用PMID。
 
 ---
 
@@ -41,7 +57,7 @@
 ### 正确模式
 
 ```
-[原文声明] 作者认为「原文内容」（paper_id, 位置）
+[原文声明] 作者认为「原文内容」（PMID 12345678）
     ↓ （必须紧跟）
 [模型归纳] 基于上述原文的推理分析，说明推理依据
 ```
@@ -69,13 +85,13 @@
 ### 正确示例
 
 ```markdown
-**[原文声明]** 作者A指出「Deep learning requires large labeled datasets」（paper_1, Introduction第2段）
+**[原文声明]** 作者A指出「Deep learning requires large labeled datasets」（PMID 12345678）
 
-**[模型归纳]** 这表明数据标注成本是深度学习在医学影像中应用的核心瓶颈，paper_1将此作为其研究动机的基础前提。
+**[模型归纳]** 这表明数据标注成本是深度学习在医学影像中应用的核心瓶颈，该文献将此作为其研究动机的基础前提。
 
-**[原文声明]** 作者B进一步指出「Data annotation in medical imaging is particularly expensive due to the need for expert radiologists」（paper_2, Introduction第1段）
+**[原文声明]** 作者B进一步指出「Data annotation in medical imaging is particularly expensive due to the need for expert radiologists」（PMID 87654321）
 
-**[模型归纳]** paper_2将paper_1的通用瓶颈具体化到医学领域，指出医学影像标注的特殊困难在于专家成本。这与paper_1的观点形成递进关系：从"标注稀缺"到"医学标注更加稀缺"。
+**[模型归纳]** 该文献将通用瓶颈具体化到医学领域，指出医学影像标注的特殊困难在于专家成本。与前一文献形成递进关系：从"标注稀缺"到"医学标注更加稀缺"。
 ```
 
 ---
@@ -90,7 +106,7 @@
 
 **示例**：
 ```markdown
-[原文声明] 「Our method achieves 95% accuracy on benchmark A」（paper_1, Introduction第4段）
+[原文声明] 「Our method achieves 95% accuracy on benchmark A」（PMID 11111111）
 [模型归纳] 该方法在benchmark A上取得了competitive performance。
 ```
 
@@ -104,9 +120,9 @@
 
 **示例**：
 ```markdown
-[原文声明] paper_1指出「Method X excels in scenario A」（paper_1, Introduction第3段）
-[原文声明] paper_2指出「Method X fails in scenario B」（paper_2, Introduction第4段）
-[模型归纳] paper_1和paper_2对Method X的评价存在矛盾——在场景A表现优异但在场景B表现差，暗示Method X可能存在过拟合场景A的风险。该矛盾尚未在已有文献中得到明确讨论。
+[原文声明] 文献指出「Method X excels in scenario A」（PMID AAAA）
+[原文声明] 另一文献指出「Method X fails in scenario B」（PMID BBBB）
+[模型归纳] 两篇文献对Method X的评价存在矛盾——在场景A表现优异但在场景B表现差，暗示Method X可能存在过拟合场景A的风险。该矛盾尚未在已有文献中得到明确讨论。
 ```
 
 ---
@@ -119,20 +135,21 @@
 
 **示例**：
 ```markdown
-[原文声明] paper_1指出「IDR binding is entropy-driven」（paper_1, Introduction第2段）
-[原文声明] paper_2指出「AlphaFold predicts local structure that may reflect bound-state conformations」（paper_2, Introduction第4段）
-[原文声明] paper_3指出「IDP conformations depend on amino acid composition」（paper_3, Introduction第1段）
+[原文声明] 文献A指出「IDR binding is entropy-driven」（PMID AAAA）
+[原文声明] 文献B指出「AlphaFold predicts local structure that may reflect bound-state conformations」（PMID BBBB）
+[原文声明] 文献C指出「IDP conformations depend on amino acid composition」（PMID CCCC）
 
-[模型归纳] 综合上述三点可以推演出一个框架：氨基酸序列 → 编码构象偏好 → 决定结合熵 → AlphaFold局部结构反映结合态。这意味着AlphaFold的低pLDDT区域可能并非"无结构"，而是编码了结合前的构象熵储备。该推演基于：（1）paper_1的熵驱动机制，（2）paper_2的结构预测观察，（3）paper_3的序列-构象关系。但此框架尚未在文献中明确整合。
+[模型归纳] 综合上述三点可以推演出一个框架：氨基酸序列 → 编码构象偏好 → 决定结合熵 → AlphaFold局部结构反映结合态。这意味着AlphaFold的低pLDDT区域可能并非"无结构"，而是编码了结合前的构象熵储备。该推演基于：（1）PMID AAAA的熵驱动机制，（2）PMID BBBB的结构预测观察，（3）PMID CCCC的序列-构象关系。但此框架尚未在文献中明确整合。
 ```
 
 ---
 
-### 位置标注规范
+### 引用格式规范
 
-| 位置 | 格式 | 示例 |
-|-----|------|------|
-| Introduction第X段 | `（paper_1, Introduction第X段）` | `（paper_1, Introduction第2段）` |
-| Abstract | `（paper_1, Abstract）` | `（paper_1, Abstract）` |
-| Results第X段 | `（paper_1, Results第X段）` | `（paper_1, Results第3段）` |
-| Conclusion | `（paper_1, Conclusion）` | `（paper_1, Conclusion段）` |
+**格式**：`（PMID 12345678）` 或 `（DOI 10.xxx/yyy）` — 仅需唯一ID。
+
+**示例**：
+```markdown
+[原文声明] 作者指出「原文内容」（PMID 12345678）
+[原文声明] 另一作者指出「原文内容」（DOI 10.xxx/yyy）
+```
