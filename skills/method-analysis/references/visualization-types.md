@@ -1,27 +1,29 @@
 # 可视化类型详解 (method-analysis)
 
-## 5种Mermaid图表 + 2种表格
+## 7种Mermaid图表 + 3种表格
 
 ---
 
-### 1. 问题拆解树 (Mermaid graph)
+### 1. 问题拆解树 (Mermaid graph) ⭐
 
-**用途**：展示用户问题拆解为子问题树的层级结构。
+**用途**：展示问题多层次拆解为子问题树的层级结构。深度≥3层。标注用户原始问题+桥梁开放问题的嫁接关系。
 
 ```mermaid
 graph TD
-    Q["核心问题<br/>[用户问题陈述]"]:::core
-    Q --> S1["子问题1<br/>[描述]"]:::sub
-    Q --> S2["子问题2<br/>[描述]"]:::sub
-    Q --> S3["子问题3<br/>[描述]"]:::sub
-    S1 --> I1["输入: ..."]:::io
-    S1 --> O1["输出: ..."]:::io
-    S2 --> I2["输入: ..."]:::io
-    S2 --> O2["输出: ..."]:::io
+    Q["🟢 用户原始问题<br/>[用户问题陈述]"]:::user
+    Q --> B1["🔗 桥梁 OP-X<br/>[嫁接的开放问题]"]:::bridge
+    Q --> B2["🔗 桥梁 OP-Y<br/>[嫁接的开放问题]"]:::bridge
+    B1 --> S1["子问题1<br/>[描述]"]:::sub
+    B1 --> S2["子问题2<br/>[描述]"]:::sub
+    B2 --> S3["子问题3<br/>[描述]"]:::sub
+    S1 --> S1a["子问题1.1"]:::deep
+    S1 --> S1b["子问题1.2"]:::deep
+    S3 --> S3a["子问题3.1"]:::deep
 
-    classDef core fill:#e1f5fe,stroke:#01579b,stroke-width:3px
+    classDef user fill:#c8e6c9,stroke:#2e7d32,stroke-width:3px
+    classDef bridge fill:#fff9c4,stroke:#f57f17,stroke-width:2px,stroke-dasharray:5 5
     classDef sub fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef io fill:#f5f5f5,stroke:#757575,stroke-width:1px
+    classDef deep fill:#f5f5f5,stroke:#757575,stroke-width:1px
 ```
 
 ---
@@ -152,6 +154,68 @@ graph LR
 | Optimizer | AdamW lr=1e-4 | SGD+Momentum | 大数据集选SGD |
 | Scheduler | Cosine Annealing | ReduceLROnPlateau | 不确定epoch数选后者 |
 | Regularization | Dropout 0.3 | Dropout 0.5 | 小模型加dropout |
+
+---
+
+### 7. 方案分支Fork树 ⭐（新增）
+
+**用途**：展示每个子问题的多个解决方案分支，每分支可再fork产生子方案。递归展开直至触及可实现性边界。
+
+```mermaid
+graph TD
+    SP1["子问题1: 序列编码"]:::sub
+    SP1 --> FA["方案A: pLM embedding<br/>ESM-2/ProtT5<br/>PMID 39763873, 41959048<br/>仓库: facebookresearch/esm"]:::plan
+    SP1 --> FB["方案B: 手工特征<br/>AA组成+PSSP+物化<br/>PMID 38018910"]:::plan
+    SP1 --> FC["方案C: 混合特征<br/>pLM + 手工concat<br/>[模型归纳·方案推演]"]:::plan
+    FA --> FA1["子方案A1: Frozen ESM-2<br/>仅微调下游MLP<br/>仓库: isblab/disobind"]:::subplan
+    FA --> FA2["子方案A2: Fine-tune ESM-2<br/>全参数调优<br/>仓库: HFChenLab/PhantoIDP"]:::subplan
+    FA1 --> FA1a["子方案A1a: 残基级<br/>每个残基独立embedding<br/>仓库: HFChenLab/PhantoIDP"]:::deep
+    FA1 --> FA1b["子方案A1b: 粗粒化<br/>AvgPool1d k=5<br/>仓库: isblab/disobind"]:::deep
+
+    classDef sub fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef plan fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px
+    classDef subplan fill:#e1f5fe,stroke:#01579b,stroke-width:1.5px
+    classDef deep fill:#f3e5f5,stroke:#4a148c,stroke-width:1px
+```
+
+---
+
+### 8. 交叉互作矩阵图 (Mermaid graph) ⭐（新增）
+
+**用途**：展示不同方法/仓库之间的交叉组合关系。行=方法A的组件，列=方法B的组件，交叉点=可行的组合方案。
+
+```mermaid
+graph LR
+    subgraph 方法A_Disobind
+        A1["OuterProduct<br/>交互块"]:::comp_a
+        A2["SE Loss<br/>稀疏训练"]:::comp_a
+        A3["Coarse-graining<br/>k=5"]:::comp_a
+    end
+    subgraph 方法B_PhantoIDP
+        B1["GCN Encoder<br/>图编码"]:::comp_b
+        B2["VAE生成<br/>构象采样"]:::comp_b
+        B3["FAPE Loss<br/>SE3等变"]:::comp_b
+    end
+    subgraph 方法C_DynamicGT
+        C1["动态感知<br/>bound+unbound"]:::comp_c
+        C2["几何Transformer<br/>图注意力"]:::comp_c
+    end
+    subgraph 交叉组合
+        X1["🔀 A1+B1→交互图编码<br/>[方案推演]"]:::cross
+        X2["🔀 A2+B3→等变稀疏Loss<br/>[方案推演]"]:::cross
+        X3["🔀 A1+C2→几何交互块<br/>[方案推演]"]:::cross
+        X4["🔀 B2+C1→条件动态生成<br/>[方案推演]"]:::cross
+    end
+    A1 --> X1; B1 --> X1
+    A2 --> X2; B3 --> X2
+    A1 --> X3; C2 --> X3
+    B2 --> X4; C1 --> X4
+
+    classDef comp_a fill:#c8e6c9,stroke:#2e7d32
+    classDef comp_b fill:#e1f5fe,stroke:#01579b
+    classDef comp_c fill:#fff3e0,stroke:#e65100
+    classDef cross fill:#ffcdd2,stroke:#b71c1c,stroke-width:2px,stroke-dasharray:5 5
+```
 
 ---
 
